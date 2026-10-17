@@ -1,0 +1,35 @@
+name: NOVA CLIENT Derleme
+
+on:
+workflow_dispatch:
+
+jobs:
+build:
+runs-on: ubuntu-latest
+steps:
+- name: Depoyu indir
+uses: actions/checkout@v4
+
+  - name: Java 25 kur
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '25'
+
+  - name: ZIP dosyasını aç
+    run: |
+      sudo apt-get update
+      sudo apt-get install -y unzip
+      unzip -o NOVA-CLIENT-AUTO-BUILD.zip -x '.github/workflows/*'
+
+  - name: NOVA CLIENT derle
+    run: |
+      chmod +x gradlew
+      ./gradlew --no-daemon build
+
+  - name: JAR dosyasını hazırla
+    uses: actions/upload-artifact@v4
+    with:
+      name: NOVA-CLIENT-JAR
+      path: build/libs/*.jar
+      if-no-files-found: error
