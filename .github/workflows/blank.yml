@@ -9,7 +9,6 @@ runs-on: ubuntu-latest
 steps:
 - name: Depoyu indir
 uses: actions/checkout@v4
-
   - name: Java 25 kur
     uses: actions/setup-java@v4
     with:
